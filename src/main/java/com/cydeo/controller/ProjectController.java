@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -19,16 +20,19 @@ public class ProjectController {
     }
 
     @GetMapping
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> getProjects(){
         return ResponseEntity.ok(new ResponseWrapper("Projects are successfully retrieved",projectService.listAllProjects(), HttpStatus.OK));
     };
 
     @GetMapping("/{code}")
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> getProjectByCode(@PathVariable("code") String code ){
         return ResponseEntity.ok(new ResponseWrapper("Projects is successfully retrieved",projectService.getByProjectCode(code), HttpStatus.OK));
     };
 
     @PostMapping
+    @RolesAllowed({"Manager","Admin"})
     public ResponseEntity<ResponseWrapper> createProject(@RequestBody ProjectDTO project){
         projectService.save(project);
         return ResponseEntity
@@ -37,12 +41,14 @@ public class ProjectController {
     };
 
     @PutMapping
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> updateProjects(@RequestBody ProjectDTO project){
         projectService.update(project);
         return ResponseEntity.ok(new ResponseWrapper("Projects is successfully update", HttpStatus.OK));
     };
 
     @DeleteMapping("/{code}")
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> deleteProjects(@PathVariable("code") String code){
         projectService.delete(code);
         return ResponseEntity.noContent().build();

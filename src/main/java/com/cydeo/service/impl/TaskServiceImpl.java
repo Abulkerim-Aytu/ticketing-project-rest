@@ -12,6 +12,9 @@ import com.cydeo.mapper.UserMapper;
 import com.cydeo.repository.TaskRepository;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
+import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -117,8 +120,14 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllTasksByStatusIsNot(Status status) {
+        // In these three line code, we get the user info who is login in the system.
+        // At here Trying to get information from Springboot basically"Who is login here..."
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // At here Trying to get Username by help of Token.
+        SimpleKeycloakAccount details = (SimpleKeycloakAccount) authentication.getDetails();
+        String username = details.getKeycloakSecurityContext().getToken().getPreferredUsername();
 
-        UserDTO loggedInUser = userService.findByUserName("john@employee.com");
+        UserDTO loggedInUser = userService.findByUserName(username);
 
         List<Task> tasks = taskRepository.
                 findAllByTaskStatusIsNotAndAssignedEmployee(status, userMapper.convertToEntity(loggedInUser));
@@ -128,7 +137,14 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDTO> listAllTasksByStatus(Status status) {
 
-        UserDTO loggedInUser = userService.findByUserName("john@employee.com");
+        // In these three line code, we get the user info who is login in the system.
+        // At here Trying to get information from Springboot basically"Who is login here..."
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // At here Trying to get Username by help of Token.
+        SimpleKeycloakAccount details = (SimpleKeycloakAccount) authentication.getDetails();
+        String username = details.getKeycloakSecurityContext().getToken().getPreferredUsername();
+
+        UserDTO loggedInUser = userService.findByUserName(username);
 
         List<Task> tasks = taskRepository.
                 findAllByTaskStatusAndAssignedEmployee(status, userMapper.convertToEntity(loggedInUser));

@@ -20,12 +20,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<ResponseWrapper> getUsers(){
-        return ResponseEntity.ok(new ResponseWrapper("Success",userService.listAllUsers(), HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Users are successfully retrieved",userService.listAllUsers(), HttpStatus.OK));
     }
 
     @GetMapping("/{name}")
     public ResponseEntity<ResponseWrapper> getUsersByUserName(@PathVariable("name")String name){
-        return ResponseEntity.ok(new ResponseWrapper("Success",userService.findByUserName(name), HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("User is successfully retrieved",userService.findByUserName(name), HttpStatus.OK));
 
     }
     @PostMapping
@@ -33,16 +33,16 @@ public class UserController {
         userService.save(user);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ResponseWrapper("Success", HttpStatus.CREATED));
+                .body(new ResponseWrapper("User is successfully created", HttpStatus.CREATED));
     }
 
     @PutMapping
     public ResponseEntity<ResponseWrapper> updateUser(@RequestBody UserDTO user){
-        return ResponseEntity.ok(new ResponseWrapper("Success",userService.update(user), HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("User is successfully updated",userService.update(user), HttpStatus.OK));
     }
 
     @DeleteMapping("/{username}")
-    public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable("username") String user){
+    public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable("User is successfully deleted") String user){
         userService.delete(user);
         return ResponseEntity.noContent().build();
     }

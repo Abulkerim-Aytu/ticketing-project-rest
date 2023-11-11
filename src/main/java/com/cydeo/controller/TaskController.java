@@ -21,48 +21,48 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<ResponseWrapper> getTasks(){
-        return ResponseEntity.ok(new ResponseWrapper("success",taskService.listAllTasks(), HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Tasks are successfully retrieved",taskService.listAllTasks(), HttpStatus.OK));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseWrapper> getTaskById(@PathVariable("id") Long id){
-        return ResponseEntity.ok(new ResponseWrapper("success",taskService.findById(id), HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Tasks is successfully retrieved",taskService.findById(id), HttpStatus.OK));
     }
 
     @PostMapping
     public ResponseEntity<ResponseWrapper> createTask(@RequestBody TaskDTO task){
         taskService.save(task);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ResponseWrapper("success", HttpStatus.CREATED));
+                .body(new ResponseWrapper("Tasks is successfully created", HttpStatus.CREATED));
     }
 
     @PutMapping
     public ResponseEntity<ResponseWrapper> updateTask(@RequestBody TaskDTO task){
         taskService.update(task);
-        return ResponseEntity.ok(new ResponseWrapper("success", HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Tasks is successfully updated", HttpStatus.OK));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseWrapper> deleteTask(@PathVariable("id") Long id){
         taskService.delete(id);
-        return ResponseEntity.ok(new ResponseWrapper("success", HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Tasks is successfully deleted", HttpStatus.OK));
     }
 
     @GetMapping("/employee/pending-tasks")
     public ResponseEntity<ResponseWrapper> employeePendingTasks(){
         List<TaskDTO> taskDTOList = taskService.listAllTasksByStatusIsNot(Status.COMPLETE);
-        return ResponseEntity.ok(new ResponseWrapper("success",taskDTOList,HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Tasks are successfully retrieved",taskDTOList,HttpStatus.OK));
     }
 
     @PutMapping("/employee/update")
     public ResponseEntity<ResponseWrapper> employeeUpdateTasks(@RequestBody TaskDTO task){
         taskService.update(task);
-        return ResponseEntity.ok(new ResponseWrapper("success",HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Tasks is successfully updated",HttpStatus.OK));
     }
 
     @GetMapping("/employee/archive")
     public ResponseEntity<ResponseWrapper> employeeArchivedTasks(){
         List<TaskDTO> taskDTOList = taskService.listAllTasksByStatus(Status.COMPLETE);
-        return ResponseEntity.ok(new ResponseWrapper("success",taskDTOList,HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Tasks are successfully retrieved",taskDTOList,HttpStatus.OK));
     }
 }

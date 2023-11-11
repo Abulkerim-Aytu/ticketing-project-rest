@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/project")
 public class ProjectController {
@@ -36,7 +38,8 @@ public class ProjectController {
 
     @PutMapping
     public ResponseEntity<ResponseWrapper> updateProjects(@RequestBody ProjectDTO project){
-        return ResponseEntity.ok(new ResponseWrapper("success",projectService.update(project), HttpStatus.OK));
+        projectService.update(project);
+        return ResponseEntity.ok(new ResponseWrapper("success", HttpStatus.OK));
     };
 
     @DeleteMapping("/{code}")
@@ -45,9 +48,15 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     };
 
-    @GetMapping()
-    public ResponseEntity<ResponseWrapper> getProjectByManager(){};
+    @GetMapping("/manager/project-status")
+    public ResponseEntity<ResponseWrapper> getProjectByManager(){
+        List<ProjectDTO> projectDTOList = projectService.listAllProjects();
+        return ResponseEntity.ok(new ResponseWrapper("success",projectDTOList, HttpStatus.OK));
+    };
 
-
-    public ResponseEntity<ResponseWrapper> managerCompleteProjects(){};
+    @PutMapping("/manager/complete/{projectCode}")
+    public ResponseEntity<ResponseWrapper> managerCompleteProjects(@PathVariable("projectCode")String projectCode){
+        projectService.complete(projectCode);
+        return ResponseEntity.ok(new ResponseWrapper("success", HttpStatus.OK));
+    };
 }

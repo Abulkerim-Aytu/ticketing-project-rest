@@ -20,12 +20,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<ResponseWrapper> getUsers(){
-        return ResponseEntity.ok(new ResponseWrapper("Success",userService.listAllUsers(), HttpStatus.ACCEPTED));
+        return ResponseEntity.ok(new ResponseWrapper("Success",userService.listAllUsers(), HttpStatus.OK));
     }
 
     @GetMapping("/{name}")
     public ResponseEntity<ResponseWrapper> getUsersByUserName(@PathVariable("name")String name){
-        return ResponseEntity.ok(new ResponseWrapper("Success",userService.findByUserName(name), HttpStatus.ACCEPTED));
+        return ResponseEntity.ok(new ResponseWrapper("Success",userService.findByUserName(name), HttpStatus.OK));
 
     }
     @PostMapping
@@ -38,7 +38,7 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<ResponseWrapper> updateUser(@RequestBody UserDTO user){
-        return ResponseEntity.ok(new ResponseWrapper("Success",userService.update(user), HttpStatus.ACCEPTED));
+        return ResponseEntity.ok(new ResponseWrapper("Success",userService.update(user), HttpStatus.OK));
     }
 
     @DeleteMapping("/{username}")

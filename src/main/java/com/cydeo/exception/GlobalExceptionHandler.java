@@ -16,11 +16,12 @@ import org.springframework.web.method.HandlerMethod;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
-
+//When ever exceptions happens this class will be executed.
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(TicketingProjectException.class)
+    // When ever exceptions happens belongs to TicketingProjectException.class , execute below method.
     public ResponseEntity<ResponseWrapper> serviceException(TicketingProjectException se){
         String message = se.getMessage();
         return new ResponseEntity<>(ResponseWrapper.builder().success(false).code(HttpStatus.CONFLICT.value()).message(message).build(),HttpStatus.CONFLICT);

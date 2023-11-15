@@ -17,6 +17,7 @@ import org.springframework.web.method.HandlerMethod;
 import java.lang.reflect.Method;
 import java.util.Optional;
 //When ever exceptions happens this class will be executed.
+//Help of this class we also modify the JSON output with exceptions fields .
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -35,7 +36,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({Exception    .class, RuntimeException.class, Throwable.class, BadCredentialsException.class})
     public ResponseEntity<ResponseWrapper> genericException(Throwable e, HandlerMethod handlerMethod) {
-
+        // If the method annotated with the annotation we create, this statement will be executed.
         Optional<DefaultExceptionMessageDto> defaultMessage = getMessageFromAnnotation(handlerMethod.getMethod());
         if (defaultMessage.isPresent() && !ObjectUtils.isEmpty(defaultMessage.get().getMessage())) {
             ResponseWrapper response = ResponseWrapper
@@ -45,7 +46,7 @@ public class GlobalExceptionHandler {
                     .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
                     .build();
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        } // Or else This statement will be executed.
         return new ResponseEntity<>(ResponseWrapper.builder().success(false).message("Action failed: An error occurred!").code(HttpStatus.INTERNAL_SERVER_ERROR.value()).build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

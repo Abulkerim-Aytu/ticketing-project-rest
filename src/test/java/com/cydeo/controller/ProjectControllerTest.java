@@ -136,36 +136,36 @@ class ProjectControllerTest {
         return objectMapper.writeValueAsString(obj);
     }
 
-//    private static String getToken() {
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-//
-//        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-//
-//        map.add("grant_type", "password");
-//        map.add("client_id", "ticketing-app");
-//        map.add("client_secret", "P2tMpbaXrvkdeit4b53umI0lY1p5TtAL");
-//        map.add("username", "ozzy");
-//        map.add("password", "abc1");
-//        map.add("scope", "openid");
-//
-//        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
-//
-//        ResponseEntity<TestResponseDTO> response =
-//                restTemplate.exchange("http://localhost:8080/auth/realms/cydeo-dev/protocol/openid-connect/token",
-//                        HttpMethod.POST,
-//                        entity,
-//                        TestResponseDTO.class);
-//
-//        if (response.getBody() != null) {
-//            return response.getBody().getAccess_token();
-//        }
-//
-//        return "";
-//
-//    }
+    private static String getToken() {
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+
+        map.add("grant_type", "password");
+        map.add("client_id", "ticketing-app");
+        map.add("client_secret", "P2tMpbaXrvkdeit4b53umI0lY1p5TtAL");
+        map.add("username", "ozzy");
+        map.add("password", "abc1");
+        map.add("scope", "openid");
+
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
+
+        ResponseEntity<TestResponseDTO> response =
+                restTemplate.exchange("http://localhost:8080/auth/realms/cydeo-dev/protocol/openid-connect/token",
+                        HttpMethod.POST,
+                        entity,
+                        TestResponseDTO.class);
+
+        if (response.getBody() != null) {
+            return response.getBody().getAccess_token();
+        }
+
+        return "";
+
+    }
 
 }

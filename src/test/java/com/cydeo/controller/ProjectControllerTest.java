@@ -136,6 +136,8 @@ class ProjectControllerTest {
         return objectMapper.writeValueAsString(obj);
     }
 
+
+//  Most of the time we are NOT going to use structure like this.
     private static String getToken() {
 
         RestTemplate restTemplate = new RestTemplate();
